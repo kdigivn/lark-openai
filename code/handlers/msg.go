@@ -134,7 +134,7 @@ func withSplitLine() larkcard.MessageCardElement {
 func withHeader(title string, color string) *larkcard.
 	MessageCardHeader {
 	if title == "" {
-		title = utils.I18n.Sprintf("🤖️机器人提醒")
+		title = utils.I18n.Sprintf("🤖️nhắc nhở của robot")
 	}
 	header := larkcard.NewMessageCardHeader().
 		Template(color).
@@ -267,14 +267,14 @@ func newMenu(
 
 // 清除卡片按钮
 func withClearDoubleCheckBtn(sessionID *string) larkcard.MessageCardElement {
-	confirmBtn := newBtn(utils.I18n.Sprintf("确认清除"), map[string]interface{}{
+	confirmBtn := newBtn(utils.I18n.Sprintf("Bạn có chắc chắn muốn xóa?"), map[string]interface{}{
 		"value":     "1",
 		"kind":      ClearCardKind,
 		"chatType":  UserChatType,
 		"sessionId": *sessionID,
 	}, larkcard.MessageCardButtonTypeDanger,
 	)
-	cancelBtn := newBtn(utils.I18n.Sprintf("我再想想"), map[string]interface{}{
+	cancelBtn := newBtn(utils.I18n.Sprintf("Tôi sẽ suy nghĩ lại"), map[string]interface{}{
 		"value":     "0",
 		"kind":      ClearCardKind,
 		"sessionId": *sessionID,
@@ -292,14 +292,14 @@ func withClearDoubleCheckBtn(sessionID *string) larkcard.MessageCardElement {
 
 func withPicModeDoubleCheckBtn(sessionID *string) larkcard.
 	MessageCardElement {
-	confirmBtn := newBtn(utils.I18n.Sprintf("切换模式"), map[string]interface{}{
+	confirmBtn := newBtn(utils.I18n.Sprintf("Chuyển đổi chế độ"), map[string]interface{}{
 		"value":     "1",
 		"kind":      PicModeChangeKind,
 		"chatType":  UserChatType,
 		"sessionId": *sessionID,
 	}, larkcard.MessageCardButtonTypeDanger,
 	)
-	cancelBtn := newBtn(utils.I18n.Sprintf("我再想想"), map[string]interface{}{
+	cancelBtn := newBtn(utils.I18n.Sprintf("Tôi sẽ suy nghĩ lại"), map[string]interface{}{
 		"value":     "0",
 		"kind":      PicModeChangeKind,
 		"sessionId": *sessionID,
@@ -328,7 +328,7 @@ func withOneBtn(btn *larkcard.MessageCardEmbedButton) larkcard.
 
 func withPicResolutionBtn(sessionID *string) larkcard.
 	MessageCardElement {
-	cancelMenu := newMenu(utils.I18n.Sprintf("默认分辨率"),
+	cancelMenu := newMenu(utils.I18n.Sprintf("Độ phân giải mặc định"),
 		map[string]interface{}{
 			"value":     "0",
 			"kind":      PicResolutionKind,
@@ -366,7 +366,7 @@ func withRoleTagsBtn(sessionID *string, tags ...string) larkcard.
 			value: tag,
 		})
 	}
-	cancelMenu := newMenu(utils.I18n.Sprintf("选择角色分类"),
+	cancelMenu := newMenu(utils.I18n.Sprintf("Chọn phân loại nhân vật"),
 		map[string]interface{}{
 			"value":     "0",
 			"kind":      RoleTagsChooseKind,
@@ -393,7 +393,7 @@ func withRoleBtn(sessionID *string, titles ...string) larkcard.
 			value: tag,
 		})
 	}
-	cancelMenu := newMenu(utils.I18n.Sprintf("查看内置角色"),
+	cancelMenu := newMenu(utils.I18n.Sprintf("Xem các nhân vật tích hợp sẵn"),
 		map[string]interface{}{
 			"value":     "0",
 			"kind":      RoleChooseKind,
@@ -419,7 +419,7 @@ func withAIModeBtn(sessionID *string, aiModeStrs []string) larkcard.MessageCardE
 		})
 	}
 
-	cancelMenu := newMenu(utils.I18n.Sprintf("选择模式"),
+	cancelMenu := newMenu(utils.I18n.Sprintf("Chọn chế độ"),
 		map[string]interface{}{
 			"value":     "0",
 			"kind":      AIModeChooseKind,
@@ -620,9 +620,9 @@ func sendMsg(ctx context.Context, msg string, chatId *string) error {
 func sendClearCacheCheckCard(ctx context.Context,
 	sessionId *string, msgId *string) {
 	newCard, _ := newSendCard(
-		withHeader(utils.I18n.Sprintf("🆑 机器人提醒"), larkcard.TemplateBlue),
-		withMainMd(utils.I18n.Sprintf("您确定要清除对话上下文吗？")),
-		withNote(utils.I18n.Sprintf("请注意，这将开始一个全新的对话，您将无法利用之前话题的历史信息")),
+		withHeader(utils.I18n.Sprintf("🆑 Lời nhắc của robot"), larkcard.TemplateBlue),
+		withMainMd(utils.I18n.Sprintf("Bạn có chắc chắn muốn xóa bối cảnh cuộc trò chuyện không?")),
+		withNote(utils.I18n.Sprintf("Vui lòng lưu ý rằng điều này sẽ bắt đầu một cuộc trò chuyện mới và bạn sẽ không thể tận dụng thông tin lịch sử từ các chủ đề trước đó")),
 		withClearDoubleCheckBtn(sessionId))
 	replyCard(ctx, msgId, newCard)
 }
@@ -630,27 +630,27 @@ func sendClearCacheCheckCard(ctx context.Context,
 func sendSystemInstructionCard(ctx context.Context,
 	sessionId *string, msgId *string, content string) {
 	newCard, _ := newSendCard(
-		withHeader(utils.I18n.Sprintf("🥷  已进入角色扮演模式"), larkcard.TemplateIndigo),
+		withHeader(utils.I18n.Sprintf("🥷  Đã chuyển sang chế độ nhập vai"), larkcard.TemplateIndigo),
 		withMainText(content),
-		withNote(utils.I18n.Sprintf("请注意，这将开始一个全新的对话，您将无法利用之前话题的历史信息")))
+		withNote(utils.I18n.Sprintf("Vui lòng lưu ý rằng điều này sẽ bắt đầu một cuộc trò chuyện mới và bạn sẽ không thể tận dụng thông tin lịch sử từ các chủ đề trước đó")))
 	replyCard(ctx, msgId, newCard)
 }
 
 func sendPicCreateInstructionCard(ctx context.Context,
 	sessionId *string, msgId *string) {
 	newCard, _ := newSendCard(
-		withHeader(utils.I18n.Sprintf("🖼️ 已进入图片创作模式"), larkcard.TemplateBlue),
+		withHeader(utils.I18n.Sprintf("🖼️ Đã chuyển sang chế độ tạo hình ảnh"), larkcard.TemplateBlue),
 		withPicResolutionBtn(sessionId),
-		withNote(utils.I18n.Sprintf("提醒：回复文本或图片，让AI生成相关的图片。")))
+		withNote(utils.I18n.Sprintf("Nhắc nhở: Trả lời bằng văn bản hoặc hình ảnh để cho trí tuệ nhân tạo tạo ra những hình ảnh liên quan.")))
 	replyCard(ctx, msgId, newCard)
 }
 
 func sendPicModeCheckCard(ctx context.Context,
 	sessionId *string, msgId *string) {
 	newCard, _ := newSendCard(
-		withHeader(utils.I18n.Sprintf("🖼️ 机器人提醒"), larkcard.TemplateBlue),
-		withMainMd(utils.I18n.Sprintf("收到图片，是否进入图片创作模式？")),
-		withNote(utils.I18n.Sprintf("请注意，这将开始一个全新的对话，您将无法利用之前话题的历史信息")),
+		withHeader(utils.I18n.Sprintf("🖼️ lời nhắc của robot"), larkcard.TemplateBlue),
+		withMainMd(utils.I18n.Sprintf("Nhận được hình ảnh, chuyển sang chế độ tạo hình ảnh?")),
+		withNote(utils.I18n.Sprintf("Vui lòng lưu ý rằng điều này sẽ bắt đầu một cuộc trò chuyện mới và bạn sẽ không thể tận dụng thông tin lịch sử từ các chủ đề trước đó")),
 		withPicModeDoubleCheckBtn(sessionId))
 	replyCard(ctx, msgId, newCard)
 }
@@ -658,20 +658,20 @@ func sendPicModeCheckCard(ctx context.Context,
 func sendNewTopicCard(ctx context.Context,
 	sessionId *string, msgId *string, content string) {
 	newCard, _ := newSendCard(
-		withHeader(utils.I18n.Sprintf("👻️ 已开启新的话题"), larkcard.TemplateBlue),
+		withHeader(utils.I18n.Sprintf("👻️ Đã mở chủ đề mới"), larkcard.TemplateBlue),
 		withMainText(content),
-		withNote(utils.I18n.Sprintf("提醒：点击对话框参与回复，可保持话题连贯")))
+		withNote(utils.I18n.Sprintf("Nhắc nhở: Nhấp vào hộp chat để tham gia trả lời và duy trì tính liên tục của chủ đề")))
 	replyCard(ctx, msgId, newCard)
 }
 
 func sendHelpCard(ctx context.Context,
 	sessionId *string, msgId *string) {
 	newCard, _ := newSendCard(
-		withHeader(utils.I18n.Sprintf("🎒需要帮助吗？"), larkcard.TemplateBlue),
-		withMainMd(utils.I18n.Sprintf("**我是小飞机，一款基于chatGpt技术的智能聊天机器人！**")),
+		withHeader(utils.I18n.Sprintf("🎒Bạn cần giúp đỡ không?"), larkcard.TemplateBlue),
+		withMainMd(utils.I18n.Sprintf("**Tôi là Máy bay nhỏ，một trò chuyện trí tuệ nhân tạo thông minh dựa trên công nghệ ChatGPT!**")),
 		withSplitLine(),
 		withMdAndExtraBtn(
-			utils.I18n.Sprintf("** 🆑 清除话题上下文**\n文本回复 *清除* 或 */clear*"),
+			utils.I18n.Sprintf("** 🆑 Xóa bối cảnh cuộc trò chuyện**\nTrả lời bằng văn bản *Xóa* hoặc */clear*"),
 			newBtn(utils.I18n.Sprintf("立刻清除"), map[string]interface{}{
 				"value":     "1",
 				"kind":      ClearCardKind,
@@ -679,25 +679,25 @@ func sendHelpCard(ctx context.Context,
 				"sessionId": *sessionId,
 			}, larkcard.MessageCardButtonTypeDanger)),
 		withSplitLine(),
-		withMainMd(utils.I18n.Sprintf("🤖 **AI模式选择** \n"+" 文本回复 *AI模式* 或 */ai_mode*")),
+		withMainMd(utils.I18n.Sprintf("🤖 **Lựa chọn chế độ trí tuệ nhân tạo** \n"+" Phản hồi bằng văn bản *Chế độ trí tuệ nhân tạo* hoặc */ai_mode*")),
 		withSplitLine(),
-		withMainMd(utils.I18n.Sprintf("🛖 **内置角色列表** \n"+" 文本回复 *角色列表* 或 */roles*")),
+		withMainMd(utils.I18n.Sprintf("🛖 **Danh sách nhân vật tích hợp sẵn** \n"+" Trả lời bằng văn bản *Danh sách nhân vật* hoặc */roles*")),
 		withSplitLine(),
-		withMainMd(utils.I18n.Sprintf("🥷 **角色扮演模式**\n文本回复*角色扮演* 或 */system*+空格+角色信息")),
+		withMainMd(utils.18n.Sprintf("🥷 **Chế độ nhập vai**\nPhản hồi bằng văn bản cho chế độ nhập vai* hoặc */system* + dấu cách + thông tin nhân vật")),
 		withSplitLine(),
-		withMainMd(utils.I18n.Sprintf("🎤 **AI语音对话**\n私聊模式下直接发送语音")),
+		withMainMd(utils.I18n.Sprintf("🎤 **Trò chuyện giọng nói trí tuệ nhân tạo**\nGửi tin nhắn thoại trực tiếp trong chế độ trò chuyện riêng tư")),
 		withSplitLine(),
-		withMainMd(utils.I18n.Sprintf("🎨 **图片创作模式**\n回复*图片创作* 或 */picture*")),
+		withMainMd(utils.I18n.Sprintf("🎨 **Chế độ tạo hình ảnh**\nPhản hồi*Chỉnh sửa hình ảnh* hoặc */picture*")),
 		withSplitLine(),
-		withMainMd(utils.I18n.Sprintf("🎰 **Token余额查询**\n回复*余额* 或 */balance*")),
+		withMainMd(utils.I18n.Sprintf("🎰 **Tra cứu số dư Token**\nPhản hồi*Số dư* hoặc */balance*")),
 		withSplitLine(),
-		withMainMd(utils.I18n.Sprintf("🔃️ **历史话题回档** 🚧\n"+" 进入话题的回复详情页,文本回复 *恢复* 或 */reload*")),
+		withMainMd(utils.I18n.Sprintf("🔃️ **Quay lại một chủ đề trò chuyện trước đó** 🚧\n"+" Truy cập trang chi tiết phản hồi của chủ đề, phản hồi bằng văn bản *Khôi phục* hoặc */reload*")),
 		withSplitLine(),
-		withMainMd(utils.I18n.Sprintf("📤 **话题内容导出** 🚧\n"+" 文本回复 *导出* 或 */export*")),
+		withMainMd(utils.I18n.Sprintf("📤 **Xuất dữ liệu trò chuyện** 🚧\n"+" Trả lời bằng văn bản *Xuất ra* hoặc */export*")),
 		withSplitLine(),
-		withMainMd(utils.I18n.Sprintf("🎰 **连续对话与多话题模式**\n"+" 点击对话框参与回复，可保持话题连贯。同时，单独提问即可开启全新新话题")),
+		withMainMd(utils.I18n.Sprintf("🎰 **Chế độ trò chuyện liên tục và đa chủ đề**\n"+" Nhấp vào hộp trò chuyện để tham gia phản hồi và giữ cho cuộc trò chuyện liên tục. Đồng thời, đặt câu hỏi riêng có thể bắt đầu một chủ đề hoàn toàn mới")),
 		withSplitLine(),
-		withMainMd(utils.I18n.Sprintf("🎒 **需要更多帮助**\n文本回复 *帮助* 或 */help*")),
+		withMainMd(utils.I18n.Sprintf("🎒 **cần thêm sự trợ giúp**\nPhản hồi bằng văn bản *trợ giúp* hoặc */help*")),
 	)
 	replyCard(ctx, msgId, newCard)
 }
@@ -708,14 +708,14 @@ func sendImageCard(ctx context.Context, imageKey string,
 		withImageDiv(imageKey),
 		withSplitLine(),
 		//再来一张
-		withOneBtn(newBtn(utils.I18n.Sprintf("再来一张"), map[string]interface{}{
+		withOneBtn(newBtn(utils.I18n.Sprintf("thêm một tấm (ảnh/hình)"), map[string]interface{}{
 			"value":     question,
 			"kind":      PicTextMoreKind,
 			"chatType":  UserChatType,
 			"msgId":     *msgId,
 			"sessionId": *sessionId,
 		}, larkcard.MessageCardButtonTypePrimary)),
-	)
+	)I
 	replyCard(ctx, msgId, newCard)
 	return nil
 }
@@ -726,7 +726,7 @@ func sendVarImageCard(ctx context.Context, imageKey string,
 		withImageDiv(imageKey),
 		withSplitLine(),
 		//再来一张
-		withOneBtn(newBtn(utils.I18n.Sprintf("再来一张"), map[string]interface{}{
+		withOneBtn(newBtn(utils.I18n.Sprintf("thêm một tấm (ảnh/hình)"), map[string]interface{}{
 			"value":     imageKey,
 			"kind":      PicVarMoreKind,
 			"chatType":  UserChatType,
@@ -741,11 +741,11 @@ func sendVarImageCard(ctx context.Context, imageKey string,
 func sendBalanceCard(ctx context.Context, msgId *string,
 	balance openai.BalanceResponse) {
 	newCard, _ := newSendCard(
-		withHeader(utils.I18n.Sprintf("🎰️ 余额查询"), larkcard.TemplateBlue),
-		withMainMd(utils.I18n.Sprintf("总额度: %.2f$", balance.TotalGranted)),
-		withMainMd(utils.I18n.Sprintf("已用额度: %.2f$", balance.TotalUsed)),
-		withMainMd(utils.I18n.Sprintf("可用额度: %.2f$", balance.TotalAvailable)),
-		withNote(utils.I18n.Sprintf("有效期: %s - %s",
+		withHeader(utils.I18n.Sprintf("🎰️ Tra cứu số dư"), larkcard.TemplateBlue),
+		withMainMd(utils.I18n.Sprintf("tổng hạn mức: %.2f$", balance.TotalGranted)),
+		withMainMd(utils.I18n.Sprintf("hạn mức đã sử dụng: %.2f$", balance.TotalUsed)),
+		withMainMd(utils.I18n.Sprintf("hạn mức khả dụng: %.2f$", balance.TotalAvailable)),
+		withNote(utils.I18n.Sprintf("Ngày hết hạn: %s - %s",
 			balance.EffectiveAt.Format("2006-01-02 15:04:05"),
 			balance.ExpiresAt.Format("2006-01-02 15:04:05"))),
 	)
@@ -755,26 +755,26 @@ func sendBalanceCard(ctx context.Context, msgId *string,
 func SendRoleTagsCard(ctx context.Context,
 	sessionId *string, msgId *string, roleTags []string) {
 	newCard, _ := newSendCard(
-		withHeader(utils.I18n.Sprintf("🛖 请选择角色类别"), larkcard.TemplateIndigo),
+		withHeader(utils.I18n.Sprintf("🛖 Vui lòng chọn danh mục vai trò"), larkcard.TemplateIndigo),
 		withRoleTagsBtn(sessionId, roleTags...),
-		withNote(utils.I18n.Sprintf("提醒：选择角色所属分类，以便我们为您推荐更多相关角色。")))
+		withNote(utils.I18n.Sprintf("Nhắc nhở: Chọn danh mục mà vai trò thuộc về để chúng tôi có thể đề xuất cho bạn thêm nhiều vai trò liên quan hơn.")))
 	replyCard(ctx, msgId, newCard)
 }
 
 func SendRoleListCard(ctx context.Context,
 	sessionId *string, msgId *string, roleTag string, roleList []string) {
 	newCard, _ := newSendCard(
-		withHeader(utils.I18n.Sprintf("🛖 角色列表")+" - "+roleTag, larkcard.TemplateIndigo),
+		withHeader(utils.I18n.Sprintf("🛖 danh sách vai trò")+" - "+roleTag, larkcard.TemplateIndigo),
 		withRoleBtn(sessionId, roleList...),
-		withNote(utils.I18n.Sprintf("提醒：选择内置场景，快速进入角色扮演模式。")))
+		withNote(utils.I18n.Sprintf("Nhắc nhở: Chọn một cảnh quan có sẵn để nhanh chóng nhập vai và bắt đầu chế độ đóng vai.")))
 	replyCard(ctx, msgId, newCard)
 }
 
 func SendAIModeListsCard(ctx context.Context,
 	sessionId *string, msgId *string, aiModeStrs []string) {
 	newCard, _ := newSendCard(
-		withHeader(utils.I18n.Sprintf("🤖 AI模式选择"), larkcard.TemplateIndigo),
+		withHeader(utils.I18n.Sprintf("🤖 Lựa chọn chế độ trí tuệ nhân tạo"), larkcard.TemplateIndigo),
 		withAIModeBtn(sessionId, aiModeStrs),
-		withNote(utils.I18n.Sprintf("提醒：选择内置模式，让AI更好的理解您的需求。")))
+		withNote(utils.I18n.Sprintf("Nhắc nhở: Chọn một chế độ có sẵn để giúp trí tuệ nhân tạo hiểu rõ hơn nhu cầu của bạn.")))
 	replyCard(ctx, msgId, newCard)
 }
