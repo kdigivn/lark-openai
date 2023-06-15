@@ -668,11 +668,11 @@ func sendHelpCard(ctx context.Context,
 	sessionId *string, msgId *string) {
 	newCard, _ := newSendCard(
 		withHeader(utils.I18n.Sprintf("🎒Bạn cần giúp đỡ không?"), larkcard.TemplateBlue),
-		withMainMd(utils.I18n.Sprintf("**Tôi là Máy bay nhỏ，một trò chuyện trí tuệ nhân tạo thông minh dựa trên công nghệ ChatGPT!**")),
+		withMainMd(utils.I18n.Sprintf("**Tôi là KDIGI Bot，một trò chuyện trí tuệ nhân tạo thông minh dựa trên công nghệ ChatGPT!**")),
 		withSplitLine(),
 		withMdAndExtraBtn(
 			utils.I18n.Sprintf("** 🆑 Xóa bối cảnh cuộc trò chuyện**\nTrả lời bằng văn bản *Xóa* hoặc */clear*"),
-			newBtn(utils.I18n.Sprintf("立刻清除"), map[string]interface{}{
+			newBtn(utils.I18n.Sprintf("Xoá tất cả"), map[string]interface{}{
 				"value":     "1",
 				"kind":      ClearCardKind,
 				"chatType":  UserChatType,
@@ -683,13 +683,13 @@ func sendHelpCard(ctx context.Context,
 		withSplitLine(),
 		withMainMd(utils.I18n.Sprintf("🛖 **Danh sách nhân vật tích hợp sẵn** \n"+" Trả lời bằng văn bản *Danh sách nhân vật* hoặc */roles*")),
 		withSplitLine(),
-		withMainMd(utils.18n.Sprintf("🥷 **Chế độ nhập vai**\nPhản hồi bằng văn bản cho chế độ nhập vai* hoặc */system* + dấu cách + thông tin nhân vật")),
+		withMainMd(utils.I18n.Sprintf("🥷 **Chế độ nhập vai**\nPhản hồi bằng văn bản cho chế độ nhập vai hoặc */system* + dấu cách + thông tin nhân vật")),
 		withSplitLine(),
 		withMainMd(utils.I18n.Sprintf("🎤 **Trò chuyện giọng nói trí tuệ nhân tạo**\nGửi tin nhắn thoại trực tiếp trong chế độ trò chuyện riêng tư")),
 		withSplitLine(),
-		withMainMd(utils.I18n.Sprintf("🎨 **Chế độ tạo hình ảnh**\nPhản hồi*Chỉnh sửa hình ảnh* hoặc */picture*")),
+		withMainMd(utils.I18n.Sprintf("🎨 **Chế độ tạo hình ảnh**\nPhản hồi *Chỉnh sửa hình ảnh* hoặc */picture*")),
 		withSplitLine(),
-		withMainMd(utils.I18n.Sprintf("🎰 **Tra cứu số dư Token**\nPhản hồi*Số dư* hoặc */balance*")),
+		withMainMd(utils.I18n.Sprintf("🎰 **Tra cứu số dư Token**\nPhản hồi *Số dư* hoặc */balance*")),
 		withSplitLine(),
 		withMainMd(utils.I18n.Sprintf("🔃️ **Quay lại một chủ đề trò chuyện trước đó** 🚧\n"+" Truy cập trang chi tiết phản hồi của chủ đề, phản hồi bằng văn bản *Khôi phục* hoặc */reload*")),
 		withSplitLine(),
@@ -715,7 +715,7 @@ func sendImageCard(ctx context.Context, imageKey string,
 			"msgId":     *msgId,
 			"sessionId": *sessionId,
 		}, larkcard.MessageCardButtonTypePrimary)),
-	)I
+	)
 	replyCard(ctx, msgId, newCard)
 	return nil
 }

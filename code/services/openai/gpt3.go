@@ -17,17 +17,17 @@ const (
 )
 
 var AIModeMap = map[string]AIMode{
-	"清新": Fresh,
-	"温暖": Warmth,
-	"平衡": Balance,
-	"创意": Creativity,
+	"Fresh": Fresh,
+	"Warmth": Warmth,
+	"Balance": Balance,
+	"Creativity": Creativity,
 }
 
 var AIModeStrs = []string{
-	"清新",
-	"温暖",
-	"平衡",
-	"创意",
+	"Fresh",
+	"Warmth",
+	"Balance",
+	"Creativity",
 }
 
 const (
@@ -87,14 +87,14 @@ func (gpt *ChatGPT) Completions(msg []Messages, aiMode AIMode) (resp Messages,
 	url := gpt.FullUrl("chat/completions")
 	//fmt.Println(url)
 	if url == "" {
-		return resp, errors.New("无法获取openai请求地址")
+		return resp, errors.New("Không thể lấy địa chỉ yêu cầu openai")
 	}
 	err = gpt.sendRequestWithBodyType(url, "POST", jsonBody, requestBody, gptResponseBody)
 	if err == nil && len(gptResponseBody.Choices) > 0 {
 		resp = gptResponseBody.Choices[0].Message
 	} else {
 		resp = Messages{}
-		err = errors.New("openai 请求失败")
+		err = errors.New("OpenAI: Yêu cầu không thành công")
 	}
 	return resp, err
 }
